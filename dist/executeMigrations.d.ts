@@ -5,5 +5,5 @@ declare type ExecuteMigrationsConfig = {
     queryBuilder: typeof q;
     migrationId?: string;
 };
-declare const executeMigrations: (migrations: Migration[], operation: "up" | "down" | undefined, { client, queryBuilder, migrationId }: ExecuteMigrationsConfig) => Promise<Migration[]>;
+declare const executeMigrations: (migrations: Migration[], operation: "down" | "up" | undefined, { client, queryBuilder, migrationId }: ExecuteMigrationsConfig) => Promise<Migration[]>;
 export default executeMigrations;

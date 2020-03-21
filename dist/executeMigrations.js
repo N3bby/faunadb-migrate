@@ -11,10 +11,11 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -45,19 +46,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var utils_1 = require("./utils");
 var faunadb_1 = require("faunadb");
 var executeMigrations = function (migrations, operation, _a) {
     if (operation === void 0) { operation = "up"; }
     var client = _a.client, queryBuilder = _a.queryBuilder, migrationId = _a.migrationId;
-    return __awaiter(_this, void 0, void 0, function () {
-        var _this = this;
+    return __awaiter(void 0, void 0, void 0, function () {
         return __generator(this, function (_b) {
-            return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+            return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(void 0, void 0, void 0, function () {
                     var completedMigrations, currentMigration, error_1;
-                    var _this = this;
                     return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0:
@@ -66,7 +64,7 @@ var executeMigrations = function (migrations, operation, _a) {
                                 _a.label = 1;
                             case 1:
                                 _a.trys.push([1, 7, , 8]);
-                                return [4 /*yield*/, utils_1.asyncForEach(migrations, function (migration) { return __awaiter(_this, void 0, void 0, function () {
+                                return [4 /*yield*/, utils_1.asyncForEach(migrations, function (migration) { return __awaiter(void 0, void 0, void 0, function () {
                                         return __generator(this, function (_a) {
                                             switch (_a.label) {
                                                 case 0:
@@ -101,7 +99,7 @@ var executeMigrations = function (migrations, operation, _a) {
                                 return [3 /*break*/, 8];
                             case 7:
                                 error_1 = _a.sent();
-                                reject(__assign({}, error_1, { migration: currentMigration }));
+                                reject(__assign(__assign({}, error_1), { migration: currentMigration }));
                                 return [3 /*break*/, 8];
                             case 8: return [2 /*return*/];
                         }

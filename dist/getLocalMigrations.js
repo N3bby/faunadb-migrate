@@ -20,7 +20,7 @@ var getLocalMigrations = function (migrationFolder) {
     var migrations = filenames.map(function (filename) {
         var modulePath = process.cwd() + "/" + migrationFolder + "/" + filename;
         var migrationModule = require(modulePath);
-        return __assign({}, migrationModule, { label: filename });
+        return __assign(__assign({}, migrationModule), { label: filename });
     });
     return migrations;
 };
