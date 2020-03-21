@@ -1,17 +1,20 @@
 #!/usr/bin/env node
 
 import program from "commander";
-import faunadb from "faunadb";
+import faunadb, {ClientConfig} from "faunadb";
 import setupMigrations from "./setupMigrations";
 import createMigration from "./createMigration";
 import migrate from "./migrate";
 import rollback from "./rollback";
 const MIGRATION_FOLDER = "./migrations";
-const client = new faunadb.Client({
-  domain: process.env.FAUNADB_DOMAIN,
+const clientConfig: ClientConfig = {
   scheme: process.env.FAUNADB_USE_HTTP ? 'http' : 'https',
   secret: String(process.env.FAUNADB_SECRET)
-});
+};
+if(process.env.FAUNADB_DOMAIN) {
+  clientConfig.domain = process.env.FAUNADB_DOMAIN;
+}
+const client = new faunadb.Client(clientConfig);
 
 export {
   setupMigrations,
