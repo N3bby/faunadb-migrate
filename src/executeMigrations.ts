@@ -1,4 +1,4 @@
-import { Migration } from "..";
+import { Migration } from "../index";
 import { asyncForEach } from "./utils";
 import { Client, query as q } from "faunadb";
 
