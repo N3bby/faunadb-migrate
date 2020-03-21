@@ -17,6 +17,7 @@ exports.rollback = rollback_1.default;
 var MIGRATION_FOLDER = "./migrations";
 exports.MIGRATION_FOLDER = MIGRATION_FOLDER;
 var client = new faunadb_1.default.Client({
+    domain: process.env.FAUNADB_DOMAIN,
     secret: String(process.env.FAUNADB_SECRET)
 });
 commander_1.default.version("0.0.1").description("Fauna migrate tool");

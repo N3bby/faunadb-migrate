@@ -1,4 +1,4 @@
-import { Migration } from "..";
+import { Migration } from "../index";
 import { Client, query as q } from "faunadb";
 declare type ExecuteMigrationsConfig = {
     client: Client;
