@@ -9,6 +9,7 @@ import rollback from "./rollback";
 const MIGRATION_FOLDER = "./migrations";
 const client = new faunadb.Client({
   domain: process.env.FAUNADB_DOMAIN,
+  scheme: process.env.FAUNADB_USE_HTTP ? 'http' : 'https',
   secret: String(process.env.FAUNADB_SECRET)
 });
 
