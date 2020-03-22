@@ -43,4 +43,8 @@ commander_1.default
     .command("rollback")
     .description("Run rollback")
     .action(function () { return rollback_1.default(MIGRATION_FOLDER, client); });
-commander_1.default.parse(process.argv);
+// Only try to execute command if this tool is being called directly
+// Prevent this code from being executed if loaded by a test framework
+if (require.main === module) {
+    commander_1.default.parse(process.argv);
+}

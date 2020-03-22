@@ -48,4 +48,9 @@ program
   .description("Run rollback")
   .action(() => rollback(MIGRATION_FOLDER, client));
 
-program.parse(process.argv);
+// Only try to execute command if this tool is being called directly
+// Prevent this code from being executed if loaded by a test framework
+if(require.main === module) {
+  program.parse(process.argv);
+}
+
