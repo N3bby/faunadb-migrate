@@ -65,13 +65,20 @@ var executeMigrations = function (migrations, operation, _a) {
                             case 1:
                                 _a.trys.push([1, 7, , 8]);
                                 return [4 /*yield*/, utils_1.asyncForEach(migrations, function (migration) { return __awaiter(void 0, void 0, void 0, function () {
+                                        var result;
                                         return __generator(this, function (_a) {
                                             switch (_a.label) {
                                                 case 0:
                                                     currentMigration = migration;
                                                     return [4 /*yield*/, client.query(migration[operation](queryBuilder))];
                                                 case 1:
+                                                    result = _a.sent();
+                                                    if (!(result.ref && result.ref.toString().startsWith("Index"))) return [3 /*break*/, 3];
+                                                    return [4 /*yield*/, utils_1.waitUntilIndexIsActive(client, result.name)];
+                                                case 2:
                                                     _a.sent();
+                                                    _a.label = 3;
+                                                case 3:
                                                     completedMigrations.push(migration);
                                                     return [2 /*return*/];
                                             }

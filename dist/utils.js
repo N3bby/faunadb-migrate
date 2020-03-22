@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var faunadb_1 = require("faunadb");
 exports.asyncForEach = function (array, callback) { return __awaiter(void 0, void 0, void 0, function () {
     var index;
     return __generator(this, function (_a) {
@@ -64,3 +65,32 @@ function wait(milliseconds) {
     });
 }
 exports.wait = wait;
+function waitUntilIndexIsActive(client, indexName) {
+    return __awaiter(this, void 0, void 0, function () {
+        var i, indexIsActive;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    console.log("Waiting for index " + indexName + " to become active");
+                    i = 0;
+                    _a.label = 1;
+                case 1:
+                    if (!(i < 30)) return [3 /*break*/, 6];
+                    return [4 /*yield*/, client.query(faunadb_1.query.Select("active", faunadb_1.query.Get(faunadb_1.query.Index("all_migrations"))))];
+                case 2:
+                    indexIsActive = _a.sent();
+                    if (!indexIsActive) return [3 /*break*/, 3];
+                    return [2 /*return*/];
+                case 3: return [4 /*yield*/, wait(500)];
+                case 4:
+                    _a.sent();
+                    _a.label = 5;
+                case 5:
+                    i++;
+                    return [3 /*break*/, 1];
+                case 6: throw Error("Waiting for index " + indexName + " to become active timed out...");
+            }
+        });
+    });
+}
+exports.waitUntilIndexIsActive = waitUntilIndexIsActive;

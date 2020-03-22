@@ -1,6 +1,6 @@
-import { Migration } from "../index";
-import { asyncForEach } from "./utils";
-import { Client, query as q } from "faunadb";
+import {Migration} from "../index";
+import {asyncForEach, waitUntilIndexIsActive} from "./utils";
+import {Client, query as q} from "faunadb";
 
 type ExecuteMigrationsConfig = {
   client: Client;
@@ -20,7 +20,12 @@ const executeMigrations = async (
     try {
       await asyncForEach(migrations, async (migration: Migration) => {
         currentMigration = migration;
-        await client.query(migration[operation](queryBuilder));
+        const result: any = await client.query(migration[operation](queryBuilder));
+        // TODO Temporary solution for dealing with index creation delay (as they don't become active immediately)
+        // Note: Index building might take quite some time if added to a large Collection. This is purely for test scenarios where you will want to instantly use them
+        if(result.ref && result.ref.toString().startsWith("Index")) {
+            await waitUntilIndexIsActive(client, result.name);
+        }
         completedMigrations.push(migration);
       });
 
