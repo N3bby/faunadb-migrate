@@ -16,11 +16,14 @@ var rollback_1 = __importDefault(require("./rollback"));
 exports.rollback = rollback_1.default;
 var MIGRATION_FOLDER = "./migrations";
 exports.MIGRATION_FOLDER = MIGRATION_FOLDER;
-var client = new faunadb_1.default.Client({
-    domain: process.env.FAUNADB_DOMAIN,
+var clientConfig = {
     scheme: process.env.FAUNADB_USE_HTTP ? 'http' : 'https',
     secret: String(process.env.FAUNADB_SECRET)
-});
+};
+if (process.env.FAUNADB_DOMAIN) {
+    clientConfig.domain = process.env.FAUNADB_DOMAIN;
+}
+var client = new faunadb_1.default.Client(clientConfig);
 commander_1.default.version("0.0.1").description("Fauna migrate tool");
 commander_1.default
     .command("setup")
