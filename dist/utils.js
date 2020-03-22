@@ -56,3 +56,11 @@ exports.asyncForEach = function (array, callback) { return __awaiter(void 0, voi
         }
     });
 }); };
+function wait(milliseconds) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/, new Promise(function (resolve) { return setTimeout(resolve, milliseconds); })];
+        });
+    });
+}
+exports.wait = wait;

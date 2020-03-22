@@ -41,12 +41,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var faunadb_1 = require("faunadb");
 var chalk_1 = __importDefault(require("chalk"));
+var utils_1 = require("./utils");
 var setupMigrations = function (client) { return __awaiter(void 0, void 0, void 0, function () {
     var hasSetup, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 4, , 5]);
+                _a.trys.push([0, 5, , 6]);
                 console.log("Setup migrations...");
                 return [4 /*yield*/, client.query(faunadb_1.query.Exists(faunadb_1.query.Collection("Migration")))];
             case 1:
@@ -64,14 +65,45 @@ var setupMigrations = function (client) { return __awaiter(void 0, void 0, void 
                     }))];
             case 3:
                 _a.sent();
-                console.log(chalk_1.default.green("Migration setup completed"));
-                return [3 /*break*/, 5];
+                return [4 /*yield*/, waitUntilIndexIsActive(client, "all_migrations")];
             case 4:
+                _a.sent();
+                console.log(chalk_1.default.green("Migration setup completed"));
+                return [3 /*break*/, 6];
+            case 5:
                 error_1 = _a.sent();
                 console.error(chalk_1.default.red(chalk_1.default.bold("Error") + ": " + error_1.message));
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
         }
     });
 }); };
+function waitUntilIndexIsActive(client, indexName) {
+    return __awaiter(this, void 0, void 0, function () {
+        var i, indexIsActive;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    console.log("Waiting for index " + indexName + " to become active");
+                    i = 0;
+                    _a.label = 1;
+                case 1:
+                    if (!(i < 10)) return [3 /*break*/, 6];
+                    return [4 /*yield*/, client.query(faunadb_1.query.Select("active", faunadb_1.query.Get(faunadb_1.query.Index("all_migrations"))))];
+                case 2:
+                    indexIsActive = _a.sent();
+                    if (!indexIsActive) return [3 /*break*/, 3];
+                    return [2 /*return*/];
+                case 3: return [4 /*yield*/, utils_1.wait(250)];
+                case 4:
+                    _a.sent();
+                    _a.label = 5;
+                case 5:
+                    i++;
+                    return [3 /*break*/, 1];
+                case 6: throw Error("Waiting for index " + indexName + " to become active timed out...");
+            }
+        });
+    });
+}
 exports.default = setupMigrations;

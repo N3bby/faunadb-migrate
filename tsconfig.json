@@ -3,11 +3,13 @@
     "esModuleInterop": true,
     "lib": ["dom", "esnext"],
     "module": "commonjs",
+    "rootDir": "./src",
     "outDir": "./dist",
     "strict": true,
     "target": "es5",
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "declaration": true
-  }
+  },
+  "include": ["./src/**/*.ts"]
 }
