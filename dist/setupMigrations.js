@@ -88,13 +88,13 @@ function waitUntilIndexIsActive(client, indexName) {
                     i = 0;
                     _a.label = 1;
                 case 1:
-                    if (!(i < 10)) return [3 /*break*/, 6];
+                    if (!(i < 30)) return [3 /*break*/, 6];
                     return [4 /*yield*/, client.query(faunadb_1.query.Select("active", faunadb_1.query.Get(faunadb_1.query.Index("all_migrations"))))];
                 case 2:
                     indexIsActive = _a.sent();
                     if (!indexIsActive) return [3 /*break*/, 3];
                     return [2 /*return*/];
-                case 3: return [4 /*yield*/, utils_1.wait(250)];
+                case 3: return [4 /*yield*/, utils_1.wait(500)];
                 case 4:
                     _a.sent();
                     _a.label = 5;
