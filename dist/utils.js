@@ -76,7 +76,7 @@ function waitUntilIndexIsActive(client, indexName) {
                     _a.label = 1;
                 case 1:
                     if (!(i < 30)) return [3 /*break*/, 6];
-                    return [4 /*yield*/, client.query(faunadb_1.query.Select("active", faunadb_1.query.Get(faunadb_1.query.Index("all_migrations"))))];
+                    return [4 /*yield*/, client.query(faunadb_1.query.Select("active", faunadb_1.query.Get(faunadb_1.query.Index(indexName))))];
                 case 2:
                     indexIsActive = _a.sent();
                     if (!indexIsActive) return [3 /*break*/, 3];

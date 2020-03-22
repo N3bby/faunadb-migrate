@@ -14,7 +14,7 @@ export async function waitUntilIndexIsActive(client: Client, indexName: string) 
   console.log(`Waiting for index ${indexName} to become active`);
   // Wait for max 15 seconds
   for (let i = 0; i < 30; i++) {
-    const indexIsActive = await client.query(q.Select("active", q.Get(q.Index("all_migrations"))));
+    const indexIsActive = await client.query(q.Select("active", q.Get(q.Index(indexName))));
     if (indexIsActive) {
       return;
     } else {
