@@ -14,6 +14,9 @@ const clientConfig: ClientConfig = {
 if(process.env.FAUNADB_DOMAIN) {
   clientConfig.domain = process.env.FAUNADB_DOMAIN;
 }
+if(process.env.FAUNADB_PORT) {
+  clientConfig.port = +process.env.FAUNADB_PORT;
+}
 const client = new faunadb.Client(clientConfig);
 
 export {

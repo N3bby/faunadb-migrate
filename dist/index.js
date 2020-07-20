@@ -23,6 +23,9 @@ var clientConfig = {
 if (process.env.FAUNADB_DOMAIN) {
     clientConfig.domain = process.env.FAUNADB_DOMAIN;
 }
+if (process.env.FAUNADB_PORT) {
+    clientConfig.port = +process.env.FAUNADB_PORT;
+}
 var client = new faunadb_1.default.Client(clientConfig);
 commander_1.default.version("0.0.1").description("Fauna migrate tool");
 commander_1.default
